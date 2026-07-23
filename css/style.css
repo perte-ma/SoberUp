@@ -1,0 +1,63 @@
+/* 
+Light mode: default (:root)
+Dark mode: attivata con [data-theme="dark"]
+*/
+
+:root {
+    /* Sfondi */
+    --bg-page: #FFFFFF;
+    --bg-surface: #F4F6F8;
+
+    /* Testo */
+    --text-primary: #1A1D21;
+    --text-secondary: #545B66;
+
+    /* Brand */
+    --color-primary: #1D5D8B;
+
+    /* Stati semaforo */
+    --color-success: #1E7A34;
+    --color-danger: #B3261E;
+    --color-warning: #C2410C;
+}
+
+[data-theme="dark"] {
+    /* Sfondi */
+    --bg-page: #121417;
+    --bg-surface: #1E2126;
+
+    /* Testo */
+    --text-primary: #F5F7FA;
+    --text-secondary: #B4BAC2;
+
+    /* Brand */
+    --color-primary: #7EB8E8;
+
+    /* Stati semaforo */
+    --color-success: #4ADE80;
+    --color-danger: #F87171;
+    --color-warning: #FBBF24;
+}
+
+
+body {
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+}
+
+.disclaimer {
+    border: 1px solid var(--color-warning);
+    background-color: var(--bg-surface);
+    color: var(--text-secondary);
+    padding: 0.75rem 1rem;
+    border-radius: 0.375rem;
+    font-size: 0.9rem;
+}
+
+.stato-puoi-guidare {
+    color: var(--color-success);
+}
+
+.stato-non-puoi-guidare {
+    color: var(--color-danger);
+}
