@@ -1,6 +1,5 @@
 -- ============================================
 -- SoberUp - Schema Database
--- Stile coerente con l'esempio del corso (mysqli)
 -- ============================================
 
 CREATE DATABASE IF NOT EXISTS soberup_db
@@ -18,13 +17,14 @@ CREATE TABLE utente (
     cognome         VARCHAR(50)     NOT NULL,
     email           VARCHAR(100)    NOT NULL UNIQUE,
     username        VARCHAR(50)     NOT NULL UNIQUE,
-    password        VARCHAR(255)    NOT NULL,          -- conterrà l'hash, mai la password in chiaro
+    password        VARCHAR(255)    NOT NULL,
+    codice_amico    VARCHAR(10)     NOT NULL UNIQUE,
     is_admin        TINYINT(1)      NOT NULL DEFAULT 0,
     sesso           ENUM('M','F')   NOT NULL,
     data_nascita    DATE            NOT NULL,
-    peso            DECIMAL(5,2)    NOT NULL,           -- kg, es. 72.50
-    altezza         DECIMAL(5,2)    NOT NULL,           -- cm, es. 178.00
-    attivo          TINYINT(1)      NOT NULL DEFAULT 1, -- per disattivazione account da Admin
+    peso            DECIMAL(5,2)    NOT NULL,
+    altezza         DECIMAL(5,2)    NOT NULL,
+    attivo          TINYINT(1)      NOT NULL DEFAULT 1,
     data_creazione  TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -43,8 +43,8 @@ CREATE TABLE drink (
     iddrink         INT AUTO_INCREMENT PRIMARY KEY,
     nomedrink       VARCHAR(100)    NOT NULL,
     categoria       INT             NOT NULL,
-    gradazione      DECIMAL(4,2)    NOT NULL,           -- %vol, es. 12.50
-    volume          INT             NOT NULL,           -- ml, es. 330
+    gradazione      DECIMAL(4,2)    NOT NULL,
+    volume_standard INT             NOT NULL,
     immagine        VARCHAR(255)    NULL,
     descrizione     TEXT            NULL,
     FOREIGN KEY (categoria) REFERENCES categoria(idcategoria)
@@ -58,7 +58,7 @@ CREATE TABLE serata (
     idserata        INT AUTO_INCREMENT PRIMARY KEY,
     utente          INT             NOT NULL,
     datainizio      DATETIME        NOT NULL,
-    datafine        DATETIME        NULL,               -- NULL finché la serata è "aperta"
+    datafine        DATETIME        NULL,
     FOREIGN KEY (utente) REFERENCES utente(idutente)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -71,7 +71,7 @@ CREATE TABLE serata_ha_drink (
     serata          INT             NOT NULL,
     drink           INT             NOT NULL,
     orario          DATETIME        NOT NULL,
-    quantita        INT             NOT NULL DEFAULT 1,
+    volume          INT             NOT NULL DEFAULT 1,
     FOREIGN KEY (serata) REFERENCES serata(idserata)
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (drink) REFERENCES drink(iddrink)

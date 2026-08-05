@@ -14,14 +14,36 @@ class DatabaseHelper{
     // ============================================
 
     // $passwordHash deve arrivare già calcolato con password_hash() dal chiamante
-    public function insertUtente($nome, $cognome, $email, $username, $passwordHash, $sesso, $dataNascita, $peso, $altezza){
-        $query = "INSERT INTO utente (nome, cognome, email, username, password, sesso, data_nascita, peso, altezza) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public function insertUtente($nome, $cognome, $email, $username, $passwordHash, $codiceAmico, $sesso, $dataNascita, $peso, $altezza){
+        $query = "INSERT INTO utente (nome, cognome, email, username, password, codice_amico, sesso, data_nascita, peso, altezza) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('sssssssdd', $nome, $cognome, $email, $username, $passwordHash, $sesso, $dataNascita, $peso, $altezza);
+        $stmt->bind_param('ssssssssdd', $nome, $cognome, $email, $username, $passwordHash, $codiceAmico, $sesso, $dataNascita, $peso, $altezza);
         $stmt->execute();
 
         return $stmt->insert_id;
     }
+
+    // Controlla se un codice amico esiste già (usato per generarne uno univoco in fase di registrazione)
+    public function esisteCodiceAmico($codice){
+        $query = "SELECT idutente FROM utente WHERE codice_amico = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $codice);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->num_rows > 0;
+    }
+
+    // Usata nella pagina Amici: l'utente inserisce il codice di un altro utente per inviargli richiesta
+    public function getUtenteByCodiceAmico($codice){
+        $query = "SELECT idutente, nome, cognome, username FROM utente WHERE codice_amico = ? AND attivo = 1";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $codice);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_assoc();
+    }    
 
     // Usata per il login: prende username O email, ritorna la riga completa (incluso l'hash)
     // La verifica della password va fatta FUORI da questa classe con password_verify()
@@ -32,11 +54,11 @@ class DatabaseHelper{
         $stmt->execute();
         $result = $stmt->get_result();
 
-        return $result->fetch_assoc(); // null se non trovato
+        return $result->fetch_assoc();
     }
 
     public function getUtenteById($id){
-        $query = "SELECT idutente, nome, cognome, email, username, is_admin, sesso, data_nascita, peso, altezza, attivo, data_creazione FROM utente WHERE idutente = ?";
+        $query = "SELECT idutente, nome, cognome, email, username, codice_amico, is_admin, sesso, data_nascita, peso, altezza, attivo, data_creazione FROM utente WHERE idutente = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $id);
         $stmt->execute();
@@ -46,7 +68,7 @@ class DatabaseHelper{
     }
 
     public function getAllUtenti(){
-        $query = "SELECT idutente, nome, cognome, email, username, is_admin, sesso, data_nascita, peso, altezza, attivo, data_creazione FROM utente ORDER BY cognome, nome";
+        $query = "SELECT idutente, nome, cognome, email, username, codice_amico, is_admin, sesso, data_nascita, peso, altezza, attivo, data_creazione FROM utente ORDER BY cognome, nome";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -166,19 +188,19 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function insertDrink($nomedrink, $categoria, $gradazione, $volume, $immagine, $descrizione){
-        $query = "INSERT INTO drink (nomedrink, categoria, gradazione, volume, immagine, descrizione) VALUES (?, ?, ?, ?, ?, ?)";
+    public function insertDrink($nomedrink, $categoria, $gradazione, $volumeStandard, $immagine, $descrizione){
+        $query = "INSERT INTO drink (nomedrink, categoria, gradazione, volume_standard, immagine, descrizione) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('sidiss', $nomedrink, $categoria, $gradazione, $volume, $immagine, $descrizione);
+        $stmt->bind_param('sidiss', $nomedrink, $categoria, $gradazione, $volumeStandard, $immagine, $descrizione);
         $stmt->execute();
 
         return $stmt->insert_id;
     }
 
-    public function updateDrink($id, $nomedrink, $categoria, $gradazione, $volume, $immagine, $descrizione){
-        $query = "UPDATE drink SET nomedrink = ?, categoria = ?, gradazione = ?, volume = ?, immagine = ?, descrizione = ? WHERE iddrink = ?";
+    public function updateDrink($id, $nomedrink, $categoria, $gradazione, $volumeStandard, $immagine, $descrizione){
+        $query = "UPDATE drink SET nomedrink = ?, categoria = ?, gradazione = ?, volume_standard = ?, immagine = ?, descrizione = ? WHERE iddrink = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('sidissi', $nomedrink, $categoria, $gradazione, $volume, $immagine, $descrizione, $id);
+        $stmt->bind_param('sidissi', $nomedrink, $categoria, $gradazione, $volumeStandard, $immagine, $descrizione, $id);
 
         return $stmt->execute();
     }
@@ -292,10 +314,10 @@ class DatabaseHelper{
         return $stmt->execute();
     }
 
-    public function insertDrinkInSerata($idserata, $iddrink, $orario, $quantita = 1){
-        $query = "INSERT INTO serata_ha_drink (serata, drink, orario, quantita) VALUES (?, ?, ?, ?)";
+    public function insertDrinkInSerata($idserata, $iddrink, $orario, $volume){
+        $query = "INSERT INTO serata_ha_drink (serata, drink, orario, volume) VALUES (?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('iisi', $idserata, $iddrink, $orario, $quantita);
+        $stmt->bind_param('iisi', $idserata, $iddrink, $orario, $volume);
         $stmt->execute();
 
         return $stmt->insert_id;
@@ -303,10 +325,10 @@ class DatabaseHelper{
 
     // Tutti i drink di una serata, con i dati del drink (gradazione, volume) necessari al calcolo del BAC
     public function getDrinkDiSerata($idserata){
-        $query = "SELECT sd.idseratadrink, sd.orario, sd.quantita, d.iddrink, d.nomedrink, d.gradazione, d.volume
-                   FROM serata_ha_drink sd, drink d
-                   WHERE sd.drink = d.iddrink AND sd.serata = ?
-                   ORDER BY sd.orario ASC";
+        $query = "SELECT sd.idseratadrink, sd.orario, sd.volume, d.iddrink, d.nomedrink, d.gradazione, d.volume_standard
+                FROM serata_ha_drink sd, drink d
+                WHERE sd.drink = d.iddrink AND sd.serata = ?
+                ORDER BY sd.orario ASC";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $idserata);
         $stmt->execute();

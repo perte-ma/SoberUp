@@ -1,6 +1,5 @@
 -- ============================================
 -- SoberUp - Popolamento dati di esempio
--- Da eseguire DOPO create.sql
 -- ============================================
 
 USE soberup_db;
@@ -10,11 +9,11 @@ USE soberup_db;
 -- Password per TUTTI gli utenti di test: Password123!
 -- Hash generato con bcrypt (compatibile con password_hash()/password_verify() di PHP)
 -- ============================================
-INSERT INTO utente (nome, cognome, email, username, password, is_admin, sesso, data_nascita, peso, altezza, attivo) VALUES
-('Admin', 'SoberUp', 'admin@soberup.it', 'admin', '$2b$10$xj8YS0Qqoh1SfARJ6vPJk.76FjaD2C6IJhEQ6mDSnLZK6Jv3OjMSK', 1, 'M', '1990-01-01', 75.00, 178.00, 1),
-('Marco', 'Rossi', 'marco.rossi@studenti.it', 'marcorossi', '$2b$10$xj8YS0Qqoh1SfARJ6vPJk.76FjaD2C6IJhEQ6mDSnLZK6Jv3OjMSK', 0, 'M', '2003-05-14', 78.00, 180.00, 1),
-('Giulia', 'Bianchi', 'giulia.bianchi@studenti.it', 'giuliabianchi', '$2b$10$xj8YS0Qqoh1SfARJ6vPJk.76FjaD2C6IJhEQ6mDSnLZK6Jv3OjMSK', 0, 'F', '2002-11-30', 58.00, 165.00, 1),
-('Luca', 'Verdi', 'luca.verdi@studenti.it', 'lucaverdi', '$2b$10$xj8YS0Qqoh1SfARJ6vPJk.76FjaD2C6IJhEQ6mDSnLZK6Jv3OjMSK', 0, 'M', '2001-03-22', 82.00, 183.00, 1);
+INSERT INTO utente (nome, cognome, email, username, password, codice_amico, is_admin, sesso, data_nascita, peso, altezza, attivo) VALUES
+('Admin', 'SoberUp', 'admin@soberup.it', 'admin', '$2b$10$xj8YS0Qqoh1SfARJ6vPJk.76FjaD2C6IJhEQ6mDSnLZK6Jv3OjMSK', 'ADM001', 1, 'M', '1990-01-01', 75.00, 178.00, 1),
+('Marco', 'Rossi', 'marco.rossi@studenti.it', 'marcorossi', '$2b$10$xj8YS0Qqoh1SfARJ6vPJk.76FjaD2C6IJhEQ6mDSnLZK6Jv3OjMSK', 'MR7K2A', 0, 'M', '2003-05-14', 78.00, 180.00, 1),
+('Giulia', 'Bianchi', 'giulia.bianchi@studenti.it', 'giuliabianchi', '$2b$10$xj8YS0Qqoh1SfARJ6vPJk.76FjaD2C6IJhEQ6mDSnLZK6Jv3OjMSK', 'GB9X4C', 0, 'F', '2002-11-30', 58.00, 165.00, 1),
+('Luca', 'Verdi', 'luca.verdi@studenti.it', 'lucaverdi', '$2b$10$xj8YS0Qqoh1SfARJ6vPJk.76FjaD2C6IJhEQ6mDSnLZK6Jv3OjMSK', 'LV3P8Z', 0, 'M', '2001-03-22', 82.00, 183.00, 1);
 
 -- ============================================
 -- CATEGORIE
@@ -30,7 +29,7 @@ INSERT INTO categoria (nomecategoria) VALUES
 -- DRINK
 -- categoria: 1=Birra, 2=Vino, 3=Superalcolici, 4=Cocktail, 5=Aperitivo
 -- ============================================
-INSERT INTO drink (nomedrink, categoria, gradazione, volume, immagine, descrizione) VALUES
+INSERT INTO drink (nomedrink, categoria, gradazione, volume_standard, immagine, descrizione) VALUES
 ('Birra chiara', 1, 5.00, 330, 'birra_chiara.jpg', 'Birra lager classica, gusto leggero e beverino.'),
 ('Birra IPA', 1, 6.50, 330, 'birra_ipa.jpg', 'India Pale Ale, più amara e alcolica di una lager.'),
 ('Vino rosso', 2, 13.00, 150, 'vino_rosso.jpg', 'Calice di vino rosso da tavola.'),
@@ -44,7 +43,6 @@ INSERT INTO drink (nomedrink, categoria, gradazione, volume, immagine, descrizio
 
 -- ============================================
 -- ARTICOLI (contenuti informativi)
--- admin = idutente 1 (Admin SoberUp)
 -- ============================================
 INSERT INTO articolo (titoloarticolo, testoarticolo, immaginearticolo, dataarticolo, admin) VALUES
 ('Come funziona il calcolo del tasso alcolemico', 'SoberUp stima il tuo tasso alcolemico usando la formula di Widmark, uno standard scientifico riconosciuto. Ricorda: si tratta sempre di una stima, non di una misurazione certa come un etilometro.', 'articolo_widmark.jpg', '2026-01-10', 1),
@@ -55,27 +53,23 @@ INSERT INTO articolo (titoloarticolo, testoarticolo, immaginearticolo, dataartic
 -- stato: in_attesa / accettata
 -- ============================================
 INSERT INTO amicizia (utente1, utente2, stato) VALUES
-(2, 3, 'accettata'),  -- Marco e Giulia sono amici
-(2, 4, 'in_attesa');  -- Marco ha inviato richiesta a Luca, non ancora accettata
+(2, 3, 'accettata'),
+(2, 4, 'in_attesa');
 
 -- ============================================
 -- SESSIONI DI CONSUMO (dati di esempio/test)
 -- ============================================
 
--- Serata APERTA di Marco (datafine NULL = serata in corso)
 INSERT INTO serata (utente, datainizio, datafine) VALUES
 (2, '2026-07-23 21:00:00', NULL);
 
--- Drink bevuti da Marco nella serata aperta (idserata = 1)
-INSERT INTO serata_ha_drink (serata, drink, orario, quantita) VALUES
-(1, 1, '2026-07-23 21:15:00', 1),  -- Birra chiara alle 21:15
-(1, 8, '2026-07-23 22:00:00', 1);  -- Spritz alle 22:00
+INSERT INTO serata_ha_drink (serata, drink, orario, volume) VALUES
+(1, 1, '2026-07-23 21:15:00', 330),
+(1, 8, '2026-07-23 22:00:00', 200);
 
--- Serata CHIUSA di Giulia (serata passata, già conclusa)
 INSERT INTO serata (utente, datainizio, datafine) VALUES
 (3, '2026-07-20 20:30:00', '2026-07-21 01:00:00');
 
--- Drink bevuti da Giulia nella serata chiusa (idserata = 2)
-INSERT INTO serata_ha_drink (serata, drink, orario, quantita) VALUES
-(2, 4, '2026-07-20 20:45:00', 1),  -- Prosecco
-(2, 9, '2026-07-20 22:30:00', 1);  -- Gin Tonic
+INSERT INTO serata_ha_drink (serata, drink, orario, volume) VALUES
+(2, 4, '2026-07-20 20:45:00', 125),
+(2, 9, '2026-07-20 22:30:00', 250);
