@@ -7,7 +7,7 @@
             <div class="collapse navbar-collapse" id="navMain">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link <?php isActive("index.php"); ?>" href="index.php">Home</a></li>
-                    <!-- TODO: aggiungere i link a Catalogo, Serata, Storico, Amici, Profilo, Login/Logout -->
+                    <!-- TODO: aggiungere i link a Catalogo, Serata, Storico, Amici, Profilo -->
                 </ul>
             </div>
         </div>

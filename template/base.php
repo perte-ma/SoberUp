@@ -1,3 +1,4 @@
+<?php /** @var array $templateParams */ ?>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -8,7 +9,9 @@
     <link rel="stylesheet" type="text/css" href="./css/style.css" />
 </head>
 <body>
-    <?php require 'template/navbar.php'; ?>
+    <?php if (isUserLoggedIn()): ?>
+        <?php require 'template/navbar.php'; ?>
+    <?php endif; ?>
 
     <main class="container my-4">
     <?php
