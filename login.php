@@ -28,6 +28,7 @@ if (isset($_GET["registrazione"]) && $_GET["registrazione"] === "ok") {
 $templateParams["errori"] = $errori ?? [];
 
 $templateParams["titolo"] = "SoberUp - Login";
+$templateParams["intestazione"] = "Accedi";
 $templateParams["nome"] = "template/login.php";
 
 require 'template/base.php';

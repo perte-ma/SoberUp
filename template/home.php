@@ -1,5 +1,4 @@
 <div class="text-center">
-    <h1>SoberUp</h1>
     <p class="lead">Stima il tuo tasso alcolemico e scopri se sei in grado di guidare.</p>
 
     <div class="disclaimer mx-auto" style="max-width: 640px;">

@@ -1,6 +1,11 @@
 <?php
 require_once 'bootstrap.php';
 
+if (isUserLoggedIn()) {
+    header("Location: index.php");
+    exit;
+}
+
 if($_SERVER["REQUEST_METHOD"] === "POST"){
     $nome = trim($_POST["nome"]);
     $cognome = trim($_POST["cognome"]);
@@ -54,6 +59,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 $templateParams["errori"] = $errori ?? [];
 
 $templateParams["titolo"] = "SoberUp - Registrazione";
+$templateParams["intestazione"] = "Registrati";
 $templateParams["nome"] = "template/registrazione.php";
 
 require 'template/base.php';

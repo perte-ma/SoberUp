@@ -1,14 +1,37 @@
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="index.php">SoberUp</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navMain">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link <?php isActive("index.php"); ?>" href="index.php">Home</a></li>
-                    <!-- TODO: aggiungere i link a Catalogo, Serata, Storico, Amici, Profilo -->
-                </ul>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container flex-wrap">
+            <a class="navbar-brand d-flex align-items-center" href="index.php">
+                <span class="rounded-circle bg-light text-dark d-inline-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px; font-size: 0.7rem; font-weight: bold;">SU</span>
+                SoberUp!
+            </a>
+
+            <!-- TODO: quando esistono Dashboard/Catalogo/Serata/Profilo-->
+
+            <div class="form-check form-switch text-light mb-0">
+                <input class="form-check-input" type="checkbox" id="darkModeSwitch">
+                <label class="form-check-label" for="darkModeSwitch">🌙</label>
             </div>
         </div>
     </nav>
+
+    <script>
+        function getPreferredTheme() {
+            const salvato = localStorage.getItem("theme");
+            if (salvato) return salvato;
+            const ora = new Date().getHours();
+            return (ora >= 20 || ora < 7) ? "dark" : "light";
+        }
+
+        function applyTheme(theme) {
+            document.documentElement.setAttribute("data-theme", theme);
+            document.getElementById("darkModeSwitch").checked = (theme === "dark");
+        }
+
+        applyTheme(getPreferredTheme());
+
+        document.getElementById("darkModeSwitch").addEventListener("change", function() {
+            const theme = this.checked ? "dark" : "light";
+            localStorage.setItem("theme", theme);
+            applyTheme(theme);
+        });
+    </script>

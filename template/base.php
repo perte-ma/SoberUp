@@ -8,12 +8,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="./css/style.css" />
 </head>
-<body>
-    <?php if (isUserLoggedIn()): ?>
-        <?php require 'template/navbar.php'; ?>
-    <?php endif; ?>
+<body class="d-flex flex-column min-vh-100">
+    
+    <?php require 'template/navbar.php'; ?>
 
-    <main class="container my-4">
+    <main class="container my-4 flex-grow-1">
+
+    <h1><?php echo $templateParams["intestazione"]; ?></h1>  
+
     <?php
     if(isset($templateParams["nome"])){
         require($templateParams["nome"]);

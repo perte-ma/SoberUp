@@ -7,6 +7,7 @@ if (!isUserLoggedIn()) {
 }
 
 $templateParams["titolo"] = "SoberUp - Home";
+$templateParams["intestazione"] = "Dashboard";
 $templateParams["nome"] = "template/home.php";
 
 require 'template/base.php';
