@@ -33,5 +33,8 @@
             const theme = this.checked ? "dark" : "light";
             localStorage.setItem("theme", theme);
             applyTheme(theme);
+            if (typeof currentSerataId !== 'undefined') {
+                renderSerataChart(currentSerataId);
+            }
         });
     </script>
