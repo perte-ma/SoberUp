@@ -61,3 +61,8 @@ body {
 .stato-non-puoi-guidare {
     color: var(--color-danger);
 }
+
+.footer {
+    color: var(--text-secondary);
+    background-color: var(--bg-page);
+}
