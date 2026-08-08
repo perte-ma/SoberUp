@@ -5,7 +5,7 @@ function getThemeColor(varName) {
 }
 
 function renderSerataChart(serataId, canvasId = 'serataChart') {
-    fetch(`chart.php?idserata=${serataId}`)
+    fetch(`utils/chart.php?idserata=${serataId}`)
         .then(res => res.json())
         .then(points => {
             const canvas = document.getElementById(canvasId);

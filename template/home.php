@@ -16,6 +16,10 @@
 <?php if ($templateParams["idserata"]): ?>
 <script>
     const currentSerataId = <?php echo $templateParams["idserata"]; ?>;
-    renderSerataChart(currentSerataId);
+    // window "load" aspetta che TUTTO sia caricato, incluso utils/drawChart.js
+    // (che nel documento sta dopo questo blocco, in fondo a template/base.php)
+    window.addEventListener("load", function () {
+        renderSerataChart(currentSerataId);
+    });
 </script>
 <?php endif; ?>
