@@ -1,7 +1,7 @@
-    <nav class="navbar navbar-dark bg-dark">
+<nav class="navbar navbar-dark bg-dark">
         <div class="container flex-wrap">
             <a class="navbar-brand d-flex align-items-center" href="index.php">
-                <span class="rounded-circle bg-light text-dark d-inline-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px; font-size: 0.7rem; font-weight: bold;">SU</span>
+                <img src="logo.png" alt="SoberUp! logo" width="32" height="32" class="rounded-circle me-2" style="object-fit: cover;">
                 SoberUp!
             </a>
 
