@@ -1,6 +1,4 @@
-<?php if (!empty($templateParams["messaggio"])): ?>
-    <div class="alert alert-success"><?php echo $templateParams["messaggio"]; ?></div>
-<?php endif; ?>
+<?php require 'template/messaggio.php'; ?>
 <?php require 'template/errori.php'; ?>
 <form action="" method="POST">
     <div class="mb-3">

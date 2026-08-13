@@ -11,7 +11,7 @@ $serataId = $_GET['idserata'];
 
 $serata = $dbh->getSerataById($serataId);
 
-if ($serata === null || $serata['utente'] != $_SESSION['idutente']) {
+if ($serata == null || $serata['utente'] != $_SESSION['idutente']) {
     http_response_code(403);
     exit;
 }
@@ -26,7 +26,7 @@ $points = chartPointsSerata($drinks, $user['peso'], $user['altezza'], $age, $use
 // Se l'orario stimato di fine e' gia' passato e la serata risulta ancora aperta,
 // la chiudiamo qui registrando quell'orario stimato (non il momento del controllo)
 $oraFineStimata = oraFineStimataSerata($drinks, $serata['datainizio'], $user['peso'], $user['altezza'], $age, $user['sesso']);
-if ($serata['datafine'] === null && time() >= $oraFineStimata) {
+if ($serata['datafine'] == null && time() >= $oraFineStimata) {
     $dbh->chiudiSerata($serataId, date('Y-m-d H:i:s', $oraFineStimata));
 }
 

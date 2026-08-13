@@ -12,7 +12,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
     $utente = $dbh->getUtenteByUsernameOrEmail($usernameOrEmail);
 
-    if ($utente !== null && password_verify($password, $utente["password"])) {
+    if ($utente != null && password_verify($password, $utente["password"])) {
         registerLoggedUser($utente);
         header("Location: index.php");
         exit;
@@ -21,7 +21,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     }
 }
 
-if (isset($_GET["registrazione"]) && $_GET["registrazione"] === "ok") {
+if (isset($_GET["registrazione"]) && $_GET["registrazione"] == "ok") {
     $templateParams["messaggio"] = "Registrazione completata, effettua il login.";
 }
 

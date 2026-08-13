@@ -22,10 +22,10 @@ function watsonTBW($weightKg, $heightCm, $age, $sex)
 {
     $sex = strtoupper($sex);
 
-    if ($sex === 'M') {
+    if ($sex == 'M') {
         return 2.447 - (0.09516 * $age) + (0.1074 * $heightCm) + (0.3362 * $weightKg);
     }
-    if ($sex === 'F') {
+    if ($sex == 'F') {
         return -2.097 + (0.1069 * $heightCm) + (0.2466 * $weightKg);
     }
     return -1; // -1 IN CASO DI ERRORE

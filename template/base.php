@@ -1,4 +1,3 @@
-<?php /** @var array $templateParams */ ?>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -14,7 +13,7 @@
 
     <main class="container my-4 flex-grow-1">
 
-    <h1><?php echo $templateParams["intestazione"]; ?></h1>  
+    <h1 class="text-center"><?php echo $templateParams["intestazione"]; ?></h1>
 
     <?php
     if(isset($templateParams["nome"])){

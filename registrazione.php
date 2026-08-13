@@ -6,7 +6,7 @@ if (isUserLoggedIn()) {
     exit;
 }
 
-if($_SERVER["REQUEST_METHOD"] === "POST"){
+if($_SERVER["REQUEST_METHOD"] == "POST"){
     $nome = trim($_POST["nome"]);
     $cognome = trim($_POST["cognome"]);
     $email = trim($_POST["email"]);
@@ -31,7 +31,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     if (strlen($password) < 8) {
         $errori[] = "La password deve essere lunga almeno 8 caratteri.";
     }
-    if ($password !== $confermaPassword) {
+    if ($password != $confermaPassword) {
         $errori[] = "Le password non coincidono.";
     }
 
@@ -42,7 +42,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         $errori[] = "Email già in uso.";
     }
 
-    if (count($errori) === 0) {
+    if (count($errori) == 0) {
         do {
             $codice = strtoupper(substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"), 0, 6));
         } while ($dbh->esisteCodiceAmico($codice));
