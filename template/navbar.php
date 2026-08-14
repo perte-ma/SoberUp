@@ -24,6 +24,7 @@
 
         function applyTheme(theme) {
             document.documentElement.setAttribute("data-theme", theme);
+            document.documentElement.setAttribute("data-bs-theme", theme);
             document.getElementById("darkModeSwitch").checked = (theme === "dark");
         }
 

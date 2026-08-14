@@ -27,7 +27,7 @@
                             <span><?php echo $inizio->format('d/m/Y H:i'); ?></span>
                             <span class="text-muted small">
                                 Durata <?php echo $durata->format('%hh %imin'); ?>
-                                &middot;
+                                -
                                 <?php echo $numDrink; ?> drink
                             </span>
                         </div>
