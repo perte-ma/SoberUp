@@ -14,12 +14,12 @@
     <div class="col-12 col-md-auto text-md-end">
         <div class="mb-4">
             <p><strong>Codice Amico:</strong> <?php echo $templateParams['utente']['codice_amico']; ?></p>
-            <a href="amici.php">I tuoi amici</a>
+            <a href="amici.php" class="btn btn-outline-primary btn-sm">I tuoi amici</a>
         </div>
     </div>
 </div>
 <hr class="mb-4">
-<form action="" method="POST">
+<form action="" method="POST" class="card shadow-sm p-4">
     <div class="mb-3">
         <label for="nome" class="form-label">Nome</label>
         <input id="nome" name="nome" type="text" class="form-control" required value="<?php echo $templateParams["utente"]["nome"];?>">
