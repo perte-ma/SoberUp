@@ -1,5 +1,5 @@
 <?php if (!empty($templateParams["errori"])): ?>
-    <div class="alert alert-danger">
+    <div class="alert alert-danger" role="alert">
         <ul class="mb-0">
             <?php foreach ($templateParams["errori"] as $errore): ?>
                 <li><?php echo $errore; ?></li>

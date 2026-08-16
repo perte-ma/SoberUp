@@ -167,7 +167,7 @@
         const oreTrascorse = Math.max(0, (adesso - primoOrario) / 3600000);
 
         if (oreTrascorse > 12) {
-            alert('Il primo drink risulta più di 12 ore fa: controlla gli orari inseriti. (Se hai bevuto dopo mezzanotte va bene inserire comunque l\'ora reale, es. 00:15 — il calcolo se ne accorge da solo.)');
+            alert('Il primo drink risulta più di 12 ore fa: controlla gli orari inseriti.');
             return;
         }
 
