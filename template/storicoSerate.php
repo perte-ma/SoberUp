@@ -19,9 +19,9 @@
             ?>
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button<?php echo $i === 0 ? '' : ' collapsed'; ?>" type="button"
+                    <button class="accordion-button<?php echo $i == 0 ? '' : ' collapsed'; ?>" type="button"
                         data-bs-toggle="collapse" data-bs-target="#<?php echo $collapseId; ?>"
-                        aria-expanded="<?php echo $i === 0 ? 'true' : 'false'; ?>"
+                        aria-expanded="<?php echo $i == 0 ? 'true' : 'false'; ?>"
                         aria-controls="<?php echo $collapseId; ?>">
                         <div class="d-flex justify-content-between w-100 me-3 flex-wrap">
                             <span><?php echo $inizio->format('d/m/Y H:i'); ?></span>
@@ -34,11 +34,11 @@
                     </button>
                 </h2>
                 <div id="<?php echo $collapseId; ?>"
-                    class="accordion-collapse collapse<?php echo $i === 0 ? ' show' : ''; ?>"
+                    class="accordion-collapse collapse<?php echo $i == 0 ? ' show' : ''; ?>"
                     data-bs-parent="#accordionStorico">
                     <div class="accordion-body">
 
-                        <?php if ($numDrink === 0): ?>
+                        <?php if ($numDrink == 0): ?>
                             <p class="text-muted mb-0">Nessun drink registrato per questa serata.</p>
                         <?php else: ?>
                             <ul class="list-group list-group-flush">

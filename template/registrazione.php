@@ -67,7 +67,7 @@
     const confermaPassword = document.getElementById("conferma-password");
      
     function controllaPassword() {
-        if (password.value !== confermaPassword.value) {
+        if (password.value != confermaPassword.value) {
             confermaPassword.setCustomValidity("Le password non coincidono");
         } else {
             confermaPassword.setCustomValidity("");

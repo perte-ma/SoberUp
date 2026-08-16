@@ -6,7 +6,7 @@ if (isUserLoggedIn()) {
     exit;
 }
 
-if($_SERVER["REQUEST_METHOD"] === "POST"){
+if($_SERVER["REQUEST_METHOD"] == "POST"){
     $usernameOrEmail = trim($_POST["username"]);
     $password = $_POST["password"];
 
