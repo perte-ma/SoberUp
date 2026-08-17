@@ -122,3 +122,38 @@ body {
     border-color: var(--color-primary);
     box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--color-primary) 25%, transparent);
 }
+
+.semaforo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+    background-color: #1E2126;
+    border-radius: 1rem;
+    padding: 1.25rem;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.semaforo-luce {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: rgba(127, 127, 127, 0.15);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.semaforo-luce.rosso.attiva {
+    background-color: var(--color-danger);
+    box-shadow: 0 0 16px color-mix(in srgb, var(--color-danger) 55%, transparent);
+}
+
+.semaforo-luce.giallo.attiva {
+    background-color: var(--color-warning);
+    box-shadow: 0 0 16px color-mix(in srgb, var(--color-warning) 55%, transparent);
+}
+
+.semaforo-luce.verde.attiva {
+    background-color: var(--color-success);
+    box-shadow: 0 0 16px color-mix(in srgb, var(--color-success) 55%, transparent);
+}

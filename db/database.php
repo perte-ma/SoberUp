@@ -323,6 +323,21 @@ class DatabaseHelper{
         return $stmt->insert_id;
     }
 
+    public function updateDrinkInSerata($idseratadrink, $orario, $volume){
+        $query = "UPDATE serata_ha_drink SET orario = ?, volume = ? WHERE idseratadrink = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('sii', $orario, $volume, $idseratadrink);
+
+        return $stmt->execute();
+    }
+
+    public function deleteDrinkInSerata($idseratadrink){
+        $stmt = $this->db->prepare("DELETE FROM serata_ha_drink WHERE idseratadrink = ?");
+        $stmt->bind_param('i', $idseratadrink);
+
+        return $stmt->execute();
+    }
+
     // Tutti i drink di una serata, con i dati del drink (gradazione, volume) necessari al calcolo del BAC
     public function getDrinkDiSerata($idserata){
         $query = "SELECT sd.idseratadrink, sd.orario, sd.volume, d.iddrink, d.nomedrink, d.gradazione, d.volume_standard
