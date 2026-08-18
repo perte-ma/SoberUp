@@ -85,7 +85,6 @@ CREATE TABLE articolo (
     idarticolo          INT AUTO_INCREMENT PRIMARY KEY,
     titoloarticolo       VARCHAR(150)    NOT NULL,
     testoarticolo         TEXT            NOT NULL,
-    immaginearticolo      VARCHAR(255)    NULL,
     dataarticolo          DATE            NOT NULL,
     admin                 INT             NOT NULL,
     FOREIGN KEY (admin) REFERENCES utente(idutente)

@@ -128,7 +128,7 @@ body {
     flex-direction: column;
     gap: 0.75rem;
     align-items: center;
-    background-color: #1E2126;
+    background-color: var(--bg-surface);
     border-radius: 1rem;
     padding: 1.25rem;
     width: fit-content;

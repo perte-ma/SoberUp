@@ -235,19 +235,19 @@ class DatabaseHelper{
         return $result->fetch_assoc();
     }
 
-    public function insertArticolo($titoloarticolo, $testoarticolo, $immaginearticolo, $dataarticolo, $admin){
-        $query = "INSERT INTO articolo (titoloarticolo, testoarticolo, immaginearticolo, dataarticolo, admin) VALUES (?, ?, ?, ?, ?)";
+    public function insertArticolo($titoloarticolo, $testoarticolo, $dataarticolo, $admin){
+        $query = "INSERT INTO articolo (titoloarticolo, testoarticolo, dataarticolo, admin) VALUES (?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ssssi', $titoloarticolo, $testoarticolo, $immaginearticolo, $dataarticolo, $admin);
+        $stmt->bind_param('sssi', $titoloarticolo, $testoarticolo, $dataarticolo, $admin);
         $stmt->execute();
 
         return $stmt->insert_id;
     }
 
-    public function updateArticolo($id, $titoloarticolo, $testoarticolo, $immaginearticolo){
-        $query = "UPDATE articolo SET titoloarticolo = ?, testoarticolo = ?, immaginearticolo = ? WHERE idarticolo = ?";
+    public function updateArticolo($id, $titoloarticolo, $testoarticolo){
+        $query = "UPDATE articolo SET titoloarticolo = ?, testoarticolo = ? WHERE idarticolo = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('sssi', $titoloarticolo, $testoarticolo, $immaginearticolo, $id);
+        $stmt->bind_param('ssi', $titoloarticolo, $testoarticolo, $id);
 
         return $stmt->execute();
     }

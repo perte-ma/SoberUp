@@ -183,7 +183,7 @@
         let statoHtml;
         if (bac <= 0.5) {
             box.classList.add('alert-success');
-            statoHtml = '<p class="mb-0">🟢 <strong>Puoi guidare</strong> — stima sotto il limite legale di 0.5 g/L.</p>';
+            statoHtml = '<p class="mb-0"><i class="bi bi-circle-fill"></i> <strong>Puoi guidare</strong> — stima sotto il limite legale di 0.5 g/L.</p>';
         } else {
             box.classList.add('alert-danger');
             const minutiTotali = Math.round(((bac - 0.5) / 0.15) * 60);
@@ -199,7 +199,7 @@
                 tempoTesto = `${ore} ore e ${minuti} minuti`;
             }
 
-            statoHtml = `<p class="mb-0">🔴 <strong>Non puoi guidare</strong> — torni sotto il limite tra circa ${tempoTesto}.</p>`;
+            statoHtml = `<p class="mb-0"><i class="bi bi-circle-fill"></i> <strong>Non puoi guidare</strong> — torni sotto il limite tra circa ${tempoTesto}.</p>`;
         }
 
         box.innerHTML = `

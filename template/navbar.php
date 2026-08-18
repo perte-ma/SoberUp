@@ -7,7 +7,7 @@
             <?php if (isUserLoggedIn()): ?>
             <a class="nav-link d-none d-md-inline-flex align-items-center gap-1 <?php isActive('index.php'); ?>" href="index.php"><i class="bi bi-house-door-fill"></i> Dashboard</a>
             <a class="nav-link d-none d-md-inline-flex align-items-center gap-1 <?php isActive('catalogo-drink.php'); ?>" href="catalogo-drink.php"><i class="bi bi-cup-straw"></i> Catalogo Drink</a>
-            <a class="nav-link d-none d-md-inline-flex align-items-center gap-1 <?php isActive('la-tua-serata.php'); ?>" href="la-tua-serata.php"><i class="bi bi-activity"></i> La tua Serata</a>
+            <a class="nav-link d-none d-md-inline-flex align-items-center gap-1 <?php isActive('serata.php'); ?>" href="serata.php"><i class="bi bi-activity"></i> La tua Serata</a>
             <a class="nav-link d-none d-md-inline-flex align-items-center gap-1 <?php isActive('profilo.php'); ?>" href="profilo.php"><i class="bi bi-person-circle"></i> Profilo</a>
             <?php endif; ?>
             <div class="form-check form-switch text-light mb-0">
@@ -21,7 +21,7 @@
     <nav class="fixed-bottom bg-dark d-flex d-md-none justify-content-around py-2">
         <a class="nav-link text-light <?php isActive('index.php'); ?>" href="index.php"><i class="bi bi-house-door-fill fs-4"></i></a>
         <a class="nav-link text-light <?php isActive('catalogo-drink.php'); ?>" href="catalogo-drink.php"><i class="bi bi-cup-straw fs-4"></i></a>
-        <a class="nav-link text-light <?php isActive('la-tua-serata.php'); ?>" href="la-tua-serata.php"><i class="bi bi-activity fs-4"></i></a>
+        <a class="nav-link text-light <?php isActive('serata.php'); ?>" href="serata.php"><i class="bi bi-activity fs-4"></i></a>
         <a class="nav-link text-light <?php isActive('profilo.php'); ?>" href="profilo.php"><i class="bi bi-person-circle fs-4"></i></a>
     </nav>
     <?php endif; ?>

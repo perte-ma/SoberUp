@@ -37,13 +37,13 @@
                         <p class="display-6 mb-1"><?php echo number_format($bac, 2); ?> g/L</p>
                         <?php if ($puoGuidare): ?>
                             <p class="mb-1 stato-puoi-guidare">
-                                🟢 <strong>Puoi guidare</strong>
+                                <i class="bi bi-circle-fill"></i> <strong>Puoi guidare</strong>
                                 <?php if ($statoSemaforo == "giallo"): ?>
                                     <br><span class="small">ma sei vicino al limite, presta attenzione</span>
                                 <?php endif; ?>
                             </p>
                         <?php else: ?>
-                            <p class="mb-1 stato-non-puoi-guidare">🔴 <strong>Non puoi guidare</strong></p>
+                            <p class="mb-1 stato-non-puoi-guidare"><i class="bi bi-circle-fill"></i> <strong>Non puoi guidare</strong></p>
                         <?php endif; ?>
                         <p class="small text-muted mb-0">
                             Torni sotto il limite legale intorno alle <?php echo date('H:i', $oraFineStimata); ?>

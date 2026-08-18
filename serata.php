@@ -33,7 +33,7 @@ if ($serataAperta && $_SERVER["REQUEST_METHOD"] == "POST") {
             if (empty($orario)) {
                 $errori[] = "L'orario è obbligatorio.";
             }
-            if ($volume === "" || $volume <= 0) {
+            if ($volume == "" || $volume <= 0) {
                 $errori[] = "Il volume deve essere maggiore di 0 ml.";
             }
             if (count($errori) == 0) {
