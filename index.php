@@ -7,6 +7,11 @@ if (!isUserLoggedIn()) {
     exit;
 }
 
+if (isAdmin()) {
+    header("Location: admin-drink.php");
+    exit;
+}
+
 $serataAperta = $dbh->getSerataAperta($_SESSION['idutente']);
 $bac = null;
 

@@ -69,7 +69,7 @@ if ($serataAperta) {
     $bacAttuale = currentSerataStatus($dbh, $serataAperta, $user);
     $serataAperta = $dbh->getSerataById($serataAperta["idserata"]);
 
-    if ($serataAperta["datafine"] !== null) {
+    if ($serataAperta["datafine"] != null) {
         $serataAperta = null;
     } else {
         $age = (new DateTime($user["data_nascita"]))->diff(new DateTime())->y;
@@ -83,7 +83,7 @@ if ($serataAperta) {
     }
 }
 
-$templateParams["haSerataAperta"] = $serataAperta !== null;
+$templateParams["haSerataAperta"] = $serataAperta != null;
 
 require 'template/base.php';
 ?>
