@@ -397,10 +397,6 @@ class DatabaseHelper{
         return $result->fetch_assoc()['millilitri'];
     }
 
-    // AMICIZIA
-
-    // Controlla se esiste già un legame tra due utenti, in un verso o nell'altro
-    // (serve prima di inviare una nuova richiesta, per evitare duplicati incrociati)
     public function getAmiciziaTra($idutente1, $idutente2){
         $query = "SELECT * FROM amicizia WHERE (utente1 = ? AND utente2 = ?) OR (utente1 = ? AND utente2 = ?)";
         $stmt = $this->db->prepare($query);
@@ -418,7 +414,7 @@ class DatabaseHelper{
 
         return $stmt->execute();
     }
-
+    
     public function accettaRichiestaAmicizia($idamicizia){
         $query = "UPDATE amicizia SET stato = 'accettata' WHERE idamicizia = ?";
         $stmt = $this->db->prepare($query);
@@ -427,7 +423,6 @@ class DatabaseHelper{
         return $stmt->execute();
     }
 
-    // Rifiuta una richiesta in attesa, o rimuove un'amicizia già accettata
     public function rimuoviAmicizia($idamicizia){
         $query = "DELETE FROM amicizia WHERE idamicizia = ?";
         $stmt = $this->db->prepare($query);
@@ -435,8 +430,6 @@ class DatabaseHelper{
 
         return $stmt->execute();
     }
-
-    // Richieste ricevute e non ancora accettate da questo utente
     public function getRichiesteInAttesa($idutente){
         $query = "SELECT am.idamicizia, u.idutente, u.nome, u.cognome, u.username
                    FROM amicizia am, utente u
@@ -449,10 +442,8 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    // Lista amici accettati (in entrambe le direzioni), con l'eventuale serata aperta
-    // (idserata sarà NULL se l'amico non sta bevendo in questo momento)
     public function getAmiciAccettati($idutente){
-        $query = "SELECT u.idutente, u.nome, u.cognome, u.username, s.idserata
+        $query = "SELECT am.idamicizia, u.idutente, u.nome, u.cognome, u.username, u.sesso, u.data_nascita, u.peso, u.altezza, s.idserata
                    FROM amicizia am
                    JOIN utente u ON (u.idutente = IF(am.utente1 = ?, am.utente2, am.utente1))
                    LEFT JOIN serata s ON (s.utente = u.idutente AND s.datafine IS NULL)
