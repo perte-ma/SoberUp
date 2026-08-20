@@ -73,7 +73,23 @@
                     <ul class="list-group">
                         <?php foreach ($drinks as $d): ?>
                             <li class="list-group-item">
-                                <form method="POST" action="serata.php" class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                                <div id="vista-<?php echo $d["idseratadrink"]; ?>" class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                                    <div>
+                                        <strong><?php echo htmlspecialchars($d["nomedrink"]); ?></strong>
+                                        <span class="text-muted small">(<?php echo $d["gradazione"]; ?>%)</span>
+                                        <br>
+                                        <span class="small text-muted"><?php echo $d["volume"]; ?> ml — <?php echo (new DateTime($d["orario"]))->format('H:i'); ?></span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <button type="button" class="btn btn-sm btn-outline-primary" title="Modifica" onclick="toggleModificaDrink(<?php echo $d["idseratadrink"]; ?>)"><i class="bi bi-pencil"></i></button>
+                                        <form method="POST" action="serata.php" onsubmit="return confirm('Eliminare questo drink dalla serata?');">
+                                            <input type="hidden" name="idseratadrink" value="<?php echo $d["idseratadrink"]; ?>">
+                                            <button type="submit" name="elimina" value="1" class="btn btn-sm btn-outline-danger" title="Elimina"><i class="bi bi-trash"></i></button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <form method="POST" action="serata.php" id="modifica-<?php echo $d["idseratadrink"]; ?>" class="d-none d-flex justify-content-between align-items-center flex-wrap gap-2">
                                     <input type="hidden" name="idseratadrink" value="<?php echo $d["idseratadrink"]; ?>">
 
                                     <div class="me-2">
@@ -86,7 +102,7 @@
                                         <span class="small text-muted">ml</span>
                                         <input type="time" class="form-control form-control-sm" style="width: 105px" name="orario" value="<?php echo (new DateTime($d["orario"]))->format('H:i'); ?>" aria-label="Orario" required>
                                         <button type="submit" name="modifica" value="1" class="btn btn-sm btn-outline-primary" title="Salva modifiche"><i class="bi bi-check-lg"></i></button>
-                                        <button type="submit" name="elimina" value="1" class="btn btn-sm btn-outline-danger" title="Elimina" onclick="return confirm('Eliminare questo drink dalla serata?');"><i class="bi bi-trash"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" title="Annulla" onclick="toggleModificaDrink(<?php echo $d["idseratadrink"]; ?>)"><i class="bi bi-x-lg"></i></button>
                                     </div>
                                 </form>
                             </li>
@@ -107,5 +123,10 @@
         window.addEventListener("load", function () {
             renderSerataChart(currentSerataId);
         });
+
+        function toggleModificaDrink(idseratadrink) {
+            document.getElementById("vista-" + idseratadrink).classList.toggle("d-none");
+            document.getElementById("modifica-" + idseratadrink).classList.toggle("d-none");
+        }
     </script>
 <?php endif; ?>
