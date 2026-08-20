@@ -1,3 +1,7 @@
+<div class="text-end mb-3">
+    <a href="storicoSerate.php" class="btn btn-sm btn-outline-secondary"><i class="bi bi-clock-history"></i> Storico Serate</a>
+</div>
+
 <div class="text-center">
     <p class="lead">Stima il tuo tasso alcolemico e scopri se sei in grado di guidare.</p>
 
@@ -45,4 +49,3 @@
             <p class="mb-0"><?php echo $templateParams["articolo"]["testoarticolo"]; ?></p>
         </div>
     <?php endif; ?>
-</div>
