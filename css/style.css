@@ -18,7 +18,7 @@ Dark mode: attivata con [data-theme="dark"]
     /* Stati semaforo */
     --color-success: #1E7A34;
     --color-danger: #B3261E;
-    --color-warning: #C2410C;
+    --color-warning: #8A6700;
 }
 
 [data-theme="dark"] {
@@ -43,6 +43,10 @@ Dark mode: attivata con [data-theme="dark"]
 body {
     background-color: var(--bg-page);
     color: var(--text-primary);
+}
+
+a {
+    color: var(--color-primary);
 }
 
 .box-articolo {
@@ -73,6 +77,31 @@ body {
 
 .text-muted {
     color: var(--text-secondary);
+}
+
+.btn-outline-secondary {
+    color: var(--text-secondary);
+    border-color: var(--text-secondary);
+}
+
+.btn-outline-primary {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.btn-outline-success {
+    color: var(--color-success);
+    border-color: var(--color-success);
+}
+
+.btn-outline-danger {
+    color: var(--color-danger);
+    border-color: var(--color-danger);
+}
+
+.btn-outline-warning {
+    color: var(--color-warning);
+    border-color: var(--color-warning);
 }
 
 .card,

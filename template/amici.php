@@ -3,12 +3,12 @@
 
 <div class="row mb-4 align-items-center">
     <div class="col-12 col-md text-center text-md-start">
-        <p class="mb-0"><strong><?php echo htmlspecialchars($templateParams["utente"]["nome"] . " " . $templateParams["utente"]["cognome"]); ?></strong></p>
-        <span class="text-muted small">@<?php echo htmlspecialchars($templateParams["utente"]["username"]); ?></span>
+        <p class="mb-0"><strong><?php echo $templateParams["utente"]["nome"] . " " . $templateParams["utente"]["cognome"]; ?></strong></p>
+        <span class="text-muted small">@<?php echo $templateParams["utente"]["username"]; ?></span>
     </div>
     <div class="col-12 col-md-auto text-center text-md-end mt-3 mt-md-0">
         <p class="mb-0"><strong>Il tuo codice amico</strong></p>
-        <span class="badge badge-orario rounded-pill fs-6"><?php echo htmlspecialchars($templateParams["utente"]["codice_amico"]); ?></span>
+        <span class="badge badge-orario rounded-pill fs-6"><?php echo $templateParams["utente"]["codice_amico"]; ?></span>
     </div>
 </div>
 
@@ -19,8 +19,8 @@
     <?php foreach ($templateParams["richieste"] as $r): ?>
         <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap gap-2">
             <div>
-                <strong><?php echo htmlspecialchars($r["nome"] . " " . $r["cognome"]); ?></strong>
-                <span class="text-muted small">(@<?php echo htmlspecialchars($r["username"]); ?>)</span>
+                <strong><?php echo $r["nome"] . " " . $r["cognome"]; ?></strong>
+                <span class="text-muted small">(@<?php echo $r["username"]; ?>)</span>
             </div>
             <div class="d-flex align-items-center gap-2">
                 <form method="POST" action="amici.php">
@@ -46,8 +46,8 @@
     <?php foreach ($templateParams["amici"] as $a): ?>
         <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap gap-2">
             <div>
-                <strong><?php echo htmlspecialchars($a["nome"] . " " . $a["cognome"]); ?></strong>
-                <span class="text-muted small">(@<?php echo htmlspecialchars($a["username"]); ?>)</span>
+                <strong><?php echo $a["nome"] . " " . $a["cognome"]; ?></strong>
+                <span class="text-muted small">(@<?php echo $a["username"]; ?>)</span>
                 <br>
                 <?php if ($a["bac"] !== null): ?>
                     <?php

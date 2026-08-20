@@ -5,8 +5,8 @@
     <?php foreach ($templateParams["utenti"] as $u): ?>
         <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap gap-2">
             <div>
-                <strong><?php echo htmlspecialchars($u["nome"] . " " . $u["cognome"]); ?></strong>
-                <span class="text-muted small">(<?php echo htmlspecialchars($u["username"]); ?>, <?php echo htmlspecialchars($u["email"]); ?>)</span>
+                <strong><?php echo $u["nome"] . " " . $u["cognome"]; ?></strong>
+                <span class="text-muted small">(<?php echo $u["username"]; ?>, <?php echo $u["email"]; ?>)</span>
                 <?php if ($u["is_admin"] == 1): ?>
                     <span class="badge badge-orario rounded-pill">Admin</span>
                 <?php endif; ?>

@@ -36,8 +36,6 @@ INSERT INTO drink (nomedrink, categoria, gradazione, volume_standard, immagine, 
 -- ARTICOLI (contenuti informativi)
 INSERT INTO articolo (titoloarticolo, testoarticolo, dataarticolo, admin) VALUES
 ('Come funziona il calcolo del tasso alcolemico', 'SoberUp stima il tuo tasso alcolemico usando la formula di Widmark, uno standard scientifico riconosciuto. Ricorda: si tratta sempre di una stima, non di una misurazione certa come un etilometro.', '2026-01-10', 1),
-('Numeri utili per tornare a casa in sicurezza', 'Se il semaforo è rosso, non guidare. Ecco alcuni numeri utili: taxi del campus, servizi NCC convenzionati, numero verde per emergenze.', '2026-01-15', 1);
-
 -- AMICIZIE
 -- stato: in_attesa / accettata
 INSERT INTO amicizia (utente1, utente2, stato) VALUES

@@ -72,7 +72,7 @@
                                 <?php foreach ($s['drinks'] as $d): ?>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <span>
-                                            <?php echo htmlspecialchars($d['nomedrink']); ?>
+                                            <?php echo $d['nomedrink']; ?>
                                             <span class="text-muted small">
                                                 (<?php echo $d['volume']; ?> ml, <?php echo $d['gradazione']; ?>%)
                                             </span>
