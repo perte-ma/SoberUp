@@ -75,7 +75,7 @@
                             <li class="list-group-item">
                                 <div id="vista-<?php echo $d["idseratadrink"]; ?>" class="d-flex justify-content-between align-items-center flex-wrap gap-2">
                                     <div>
-                                        <strong><?php echo htmlspecialchars($d["nomedrink"]); ?></strong>
+                                        <strong><?php echo $d["nomedrink"]; ?></strong>
                                         <span class="text-muted small">(<?php echo $d["gradazione"]; ?>%)</span>
                                         <br>
                                         <span class="small text-muted"><?php echo $d["volume"]; ?> ml — <?php echo (new DateTime($d["orario"]))->format('H:i'); ?></span>
@@ -93,7 +93,7 @@
                                     <input type="hidden" name="idseratadrink" value="<?php echo $d["idseratadrink"]; ?>">
 
                                     <div class="me-2">
-                                        <strong><?php echo htmlspecialchars($d["nomedrink"]); ?></strong>
+                                        <strong><?php echo $d["nomedrink"]; ?></strong>
                                         <span class="text-muted small">(<?php echo $d["gradazione"]; ?>%)</span>
                                     </div>
 
