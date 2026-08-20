@@ -1,7 +1,8 @@
 <?php require 'template/messaggio.php'; ?>
 <?php require 'template/errori.php'; ?>
 
-<div class="text-end mb-3">
+<div class="text-end mb-3 d-flex justify-content-end gap-2">
+    <a href="amici.php" class="btn btn-sm btn-outline-secondary"><i class="bi bi-people-fill"></i> Amici</a>
     <a href="storicoSerate.php" class="btn btn-sm btn-outline-secondary"><i class="bi bi-clock-history"></i> Storico Serate</a>
 </div>
 

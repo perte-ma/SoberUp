@@ -1,4 +1,5 @@
-<div class="text-end mb-3">
+<div class="text-end mb-3 d-flex justify-content-end gap-2">
+    <a href="amici.php" class="btn btn-sm btn-outline-secondary"><i class="bi bi-people-fill"></i> Amici</a>
     <a href="storicoSerate.php" class="btn btn-sm btn-outline-secondary"><i class="bi bi-clock-history"></i> Storico Serate</a>
 </div>
 
@@ -49,3 +50,4 @@
             <p class="mb-0"><?php echo $templateParams["articolo"]["testoarticolo"]; ?></p>
         </div>
     <?php endif; ?>
+</div>
