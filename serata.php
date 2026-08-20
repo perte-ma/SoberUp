@@ -44,7 +44,7 @@ if ($serataAperta && $_SERVER["REQUEST_METHOD"] == "POST") {
                 if ($orarioDrink > $adesso) {
                     $orarioDrink->modify('-1 day');
                 }
-                $dbh->updateDrinkInSerata($idseratadrink, $orarioDrink->format('Y-m-d H:i:s'), $volume);
+                $dbh->updateDrinkInSerata($idseratadrink, $serataAperta["idserata"], $orarioDrink->format('Y-m-d H:i:s'), $volume);
                 header("Location: serata.php?azione=modificato");
                 exit;
             }

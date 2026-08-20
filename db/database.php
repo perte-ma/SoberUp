@@ -9,9 +9,7 @@ class DatabaseHelper{
         }
     }
 
-    // ============================================
     // UTENTE
-    // ============================================
 
     // $passwordHash deve arrivare già calcolato con password_hash() dal chiamante
     public function insertUtente($nome, $cognome, $email, $username, $passwordHash, $codiceAmico, $sesso, $dataNascita, $peso, $altezza){
@@ -112,9 +110,7 @@ class DatabaseHelper{
         return $stmt->execute();
     }
 
-    // ============================================
     // CATEGORIA
-    // ============================================
 
     public function getCategorie(){
         $stmt = $this->db->prepare("SELECT * FROM categoria ORDER BY nomecategoria");
@@ -155,9 +151,7 @@ class DatabaseHelper{
         return $stmt->execute();
     }
 
-    // ============================================
     // DRINK
-    // ============================================
 
     public function getDrinks(){
         $query = "SELECT d.*, c.nomecategoria FROM drink d, categoria c WHERE d.categoria = c.idcategoria ORDER BY d.nomedrink";
@@ -212,9 +206,7 @@ class DatabaseHelper{
         return $stmt->execute();
     }
 
-    // ============================================
     // ARTICOLO (contenuti informativi)
-    // ============================================
 
     public function getArticoli(){
         $query = "SELECT a.*, u.nome, u.cognome FROM articolo a, utente u WHERE a.admin = u.idutente ORDER BY a.dataarticolo DESC";
@@ -259,11 +251,9 @@ class DatabaseHelper{
         return $stmt->execute();
     }
 
-    // ============================================
     // SERATA
     // Apertura/chiusura gestite in automatico dalla logica applicativa (utils/),
     // qui ci sono solo le funzioni di lettura/scrittura pure sul DB.
-    // ============================================
 
     // Ritorna la serata aperta dell'utente (datafine IS NULL), o null se non ne ha
     public function getSerataAperta($idutente){
@@ -314,7 +304,21 @@ class DatabaseHelper{
         return $stmt->execute();
     }
 
+    // Se l'orario passato e' antecedente all'inizio ufficiale della serata, aggiorna "datainizio"
+    // cosi' resta sempre coerente col drink piu' vecchio davvero registrato.
+    private function aggiornaInizioSeAntecedente($idserata, $orario){
+        $serata = $this->getSerataById($idserata);
+
+        if ($orario < $serata['datainizio']) {
+            $stmt = $this->db->prepare("UPDATE serata SET datainizio = ? WHERE idserata = ?");
+            $stmt->bind_param('si', $orario, $idserata);
+            $stmt->execute();
+        }
+    }
+
     public function insertDrinkInSerata($idserata, $iddrink, $orario, $volume){
+        $this->aggiornaInizioSeAntecedente($idserata, $orario);
+
         $query = "INSERT INTO serata_ha_drink (serata, drink, orario, volume) VALUES (?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('iisi', $idserata, $iddrink, $orario, $volume);
@@ -323,7 +327,9 @@ class DatabaseHelper{
         return $stmt->insert_id;
     }
 
-    public function updateDrinkInSerata($idseratadrink, $orario, $volume){
+    public function updateDrinkInSerata($idseratadrink, $idserata, $orario, $volume){
+        $this->aggiornaInizioSeAntecedente($idserata, $orario);
+
         $query = "UPDATE serata_ha_drink SET orario = ?, volume = ? WHERE idseratadrink = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('sii', $orario, $volume, $idseratadrink);
@@ -352,9 +358,7 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    // ============================================
     // AMICIZIA
-    // ============================================
 
     // Controlla se esiste già un legame tra due utenti, in un verso o nell'altro
     // (serve prima di inviare una nuova richiesta, per evitare duplicati incrociati)

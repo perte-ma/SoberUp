@@ -1,6 +1,4 @@
--- ============================================
 -- SoberUp - Schema Database
--- ============================================
 
 CREATE DATABASE IF NOT EXISTS soberup_db
     CHARACTER SET utf8mb4
@@ -8,9 +6,7 @@ CREATE DATABASE IF NOT EXISTS soberup_db
 
 USE soberup_db;
 
--- ============================================
 -- Tabella UTENTE
--- ============================================
 CREATE TABLE utente (
     idutente        INT AUTO_INCREMENT PRIMARY KEY,
     nome            VARCHAR(50)     NOT NULL,
@@ -28,17 +24,13 @@ CREATE TABLE utente (
     data_creazione  TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- ============================================
 -- Tabella CATEGORIA (categorie di drink)
--- ============================================
 CREATE TABLE categoria (
     idcategoria     INT AUTO_INCREMENT PRIMARY KEY,
     nomecategoria   VARCHAR(50)     NOT NULL UNIQUE
 );
 
--- ============================================
 -- Tabella DRINK
--- ============================================
 CREATE TABLE drink (
     iddrink         INT AUTO_INCREMENT PRIMARY KEY,
     nomedrink       VARCHAR(100)    NOT NULL,
@@ -51,9 +43,7 @@ CREATE TABLE drink (
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
--- ============================================
 -- Tabella SERATA (serata di consumo)
--- ============================================
 CREATE TABLE serata (
     idserata        INT AUTO_INCREMENT PRIMARY KEY,
     utente          INT             NOT NULL,
@@ -63,9 +53,7 @@ CREATE TABLE serata (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- ============================================
 -- Tabella SERATA_HA_DRINK (drink bevuti in una serata, con orario)
--- ============================================
 CREATE TABLE serata_ha_drink (
     idseratadrink   INT AUTO_INCREMENT PRIMARY KEY,
     serata          INT             NOT NULL,
@@ -78,9 +66,7 @@ CREATE TABLE serata_ha_drink (
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
--- ============================================
 -- Tabella ARTICOLO (contenuti informativi gestiti dall'Admin)
--- ============================================
 CREATE TABLE articolo (
     idarticolo          INT AUTO_INCREMENT PRIMARY KEY,
     titoloarticolo       VARCHAR(150)    NOT NULL,
@@ -91,12 +77,10 @@ CREATE TABLE articolo (
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
--- ============================================
 -- Tabella AMICIZIA (lista amici tra utenti)
 -- Nota: lo stato "può guidare / non può guidare" dell'amico NON si salva qui,
 -- si calcola al volo interrogando la serata attiva (datafine IS NULL)
 -- e i relativi drink dell'amico.
--- ============================================
 CREATE TABLE amicizia (
     idamicizia      INT AUTO_INCREMENT PRIMARY KEY,
     utente1         INT             NOT NULL,           -- chi ha inviato la richiesta

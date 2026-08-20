@@ -43,20 +43,30 @@ function bacWatson($gramsAlcohol, $weightKg, $heightCm, $age, $sex, $hoursElapse
 }
 
 
-// Calcola l'orario stimato in cui il BAC di questa serata scendera' a 0, sommando TUTTI i drink attualmente in $drinks. 
+// Calcola l'orario stimato in cui il BAC di questa serata scendera' a 0, processando i drink
+// in $drinks uno alla volta in ordine cronologico (un "pool" che decade nel tempo e si arricchisce
+// a ogni drink) invece di sommarli tutti in blocco - cosi' gestisce correttamente anche un eventuale
+// ritorno a 0 seguito da un nuovo drink piu' tardi nella stessa serata.
 // Si "aggiorna da sola" ogni volta che viene richiamata dopo aver aggiunto un drink, perche' ricalcola sempre da zero, non salva nulla.
 function oraFineStimataSerata($drinks, $datainizio, $weightKg, $heightCm, $age, $sex, $eliminationRate = 0.15)
 {
-    $totalGrams = 0;
+    $tbwLiters = watsonTBW($weightKg, $heightCm, $age, $sex);
+
+    $pool = 0;
+    $ultimoOrario = strtotime($datainizio);
+
     foreach ($drinks as $d) {
-        $totalGrams += gramsOfAlcohol($d['volume'], $d['gradazione']);
+        $orarioDrink = strtotime($d['orario']);
+        $oreTrascorse = ($orarioDrink - $ultimoOrario) / 3600;
+
+        $pool = max(0, $pool - $eliminationRate * $oreTrascorse);
+        $pool += gramsOfAlcohol($d['volume'], $d['gradazione']) / $tbwLiters;
+
+        $ultimoOrario = $orarioDrink;
     }
 
-    $tbwLiters = watsonTBW($weightKg, $heightCm, $age, $sex);
-    $initialBac = $totalGrams / $tbwLiters;
-    $oreFinoAZero = $initialBac / $eliminationRate;
-
-    return strtotime($datainizio) + ($oreFinoAZero * 3600);
+    $oreFinoAZero = $pool / $eliminationRate;
+    return $ultimoOrario + ($oreFinoAZero * 3600);
 }
 
 // Genera i punti {time, bac} per il grafico, campionando ogni $intervalMin minuti.
@@ -67,28 +77,33 @@ function chartPointsSerata($drinks, $weightKg, $heightCm, $age, $sex, $intervalM
         return [];
     }
 
+    $tbwLiters = watsonTBW($weightKg, $heightCm, $age, $sex);
+    $eliminationRate = 0.15;
+
     $start = strtotime($drinks[0]['orario']);
     $end = oraFineStimataSerata($drinks, $drinks[0]['orario'], $weightKg, $heightCm, $age, $sex);
 
     $points = [];
+    $pool = 0;
+    $ultimoOrario = $start;
+    $prossimoDrink = 0;
+
     for ($t = $start; $t <= $end; $t += $intervalMin * 60) {
-        $totalGrams = 0;
-        foreach ($drinks as $d) {
-            $drinkTime = strtotime($d['orario']);
-            if ($drinkTime <= $t) {
-                $ml = $d['volume']; // ml effettivamente bevuti in quella riga, non volume_standard
-                $totalGrams += gramsOfAlcohol($ml, $d['gradazione']);
-            }
+        while ($prossimoDrink < count($drinks) && strtotime($drinks[$prossimoDrink]['orario']) <= $t) {
+            $orarioDrink = strtotime($drinks[$prossimoDrink]['orario']);
+            $oreTrascorse = ($orarioDrink - $ultimoOrario) / 3600;
+
+            $pool = max(0, $pool - $eliminationRate * $oreTrascorse);
+            $pool += gramsOfAlcohol($drinks[$prossimoDrink]['volume'], $drinks[$prossimoDrink]['gradazione']) / $tbwLiters;
+
+            $ultimoOrario = $orarioDrink;
+            $prossimoDrink++;
         }
 
-        $hoursElapsed = ($t - $start) / 3600;
-        $bac = bacWatson($totalGrams, $weightKg, $heightCm, $age, $sex, $hoursElapsed);
+        $oreDaUltimo = ($t - $ultimoOrario) / 3600;
+        $bacPunto = max(0, $pool - $eliminationRate * $oreDaUltimo);
 
-        $points[] = ['time' => date('H:i', $t), 'bac' => round($bac, 3)];
-
-        if ($bac <= 0 && $totalGrams > 0 && $t > $start) {
-            break; // la serata e' "finita", non serve campionare oltre
-        }
+        $points[] = ['time' => date('H:i', $t), 'bac' => round($bacPunto, 3)];
     }
 
     return $points;
@@ -109,13 +124,7 @@ function currentSerataStatus($db, $serata, $user)
         return 0.0;
     }
 
-    $totalGrams = 0;
-    foreach ($drinks as $d) {
-        $ml = $d['volume']; // ml effettivamente bevuti in quella riga, non volume_standard
-        $totalGrams += gramsOfAlcohol($ml, $d['gradazione']);
-    }
-
-    $hoursElapsed = (time() - strtotime($serata['datainizio'])) / 3600;
-    return bacWatson($totalGrams, $user['peso'], $user['altezza'], $age, $user['sesso'], $hoursElapsed);
+    $eliminationRate = 0.15;
+    return $eliminationRate * (($oraFineStimata - time()) / 3600);   
 }
 ?>
