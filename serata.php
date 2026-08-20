@@ -56,6 +56,7 @@ $templateParams["titolo"] = "SoberUp - Serata";
 $templateParams["intestazione"] = "Serata in corso";
 $templateParams["nome"] = "template/serata.php";
 $templateParams["errori"] = $errori;
+$templateParams["articolo"] = $dbh->getArticoloByTitolo("Come funziona il calcolo del tasso alcolemico");
 
 if (isset($_GET["azione"]) && $_GET["azione"] == "eliminato") {
     $templateParams["messaggio"] = "Drink eliminato dalla serata.";

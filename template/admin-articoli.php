@@ -9,10 +9,10 @@
                 <span class="text-muted small">(<?php echo (new DateTime($a["dataarticolo"]))->format('d/m/Y'); ?>, di <?php echo $a["nome"]; ?> <?php echo $a["cognome"]; ?>)</span>
             </div>
             <div class="d-flex align-items-center gap-2">
-                <a href="admin-articoli.php?modifica=<?php echo $a["idarticolo"]; ?>" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a>
+                <a href="admin-articoli.php?modifica=<?php echo $a["idarticolo"]; ?>" class="btn btn-sm btn-outline-primary" title="Modifica"><i class="bi bi-pencil"></i></a>
                 <form method="POST" action="admin-articoli.php" onsubmit="return confirm('Eliminare questo articolo?');">
                     <input type="hidden" name="idarticolo" value="<?php echo $a["idarticolo"]; ?>">
-                    <button type="submit" name="elimina" value="1" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                    <button type="submit" name="elimina" value="1" class="btn btn-sm btn-outline-danger" title="Elimina"><i class="bi bi-trash"></i></button>
                 </form>
             </div>
         </li>

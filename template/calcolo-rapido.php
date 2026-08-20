@@ -24,7 +24,7 @@
 
         <div class="card shadow-sm p-4 mb-4">
             <h2 class="h5">Drink bevuti</h2>
-            <input type="text" class="form-control mb-2" id="ricercaDrink" placeholder="Cerca un drink...">
+            <input type="text" class="form-control mb-2" id="ricercaDrink" placeholder="Cerca un drink..." aria-label="Cerca un drink">
             <ul class="list-group mb-3" id="risultatiRicerca"></ul>
 
             <ul class="list-group" id="listaDrinkBevuti"></ul>
@@ -34,10 +34,12 @@
 
         <div id="resultBox" class="alert d-none" role="alert"></div>
 
-        <div class="disclaimer mx-auto">
-            Il valore calcolato è una stima statistica basata sulla formula di Widmark. Non sostituisce un
-            etilometro. In caso di dubbio, non guidare.
-        </div>
+        <?php if ($templateParams["articolo"]): ?>
+            <div class="box-articolo mx-auto">
+                <strong><?php echo $templateParams["articolo"]["titoloarticolo"]; ?></strong>
+                <p class="mb-0"><?php echo $templateParams["articolo"]["testoarticolo"]; ?></p>
+            </div>
+        <?php endif; ?>
 
     </div>
 </div>
@@ -115,9 +117,9 @@
                 <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
                     <strong>${d.nomedrink}</strong>
                     <div class="d-flex align-items-center gap-2">
-                        <input type="number" class="form-control form-control-sm inputVolume" style="width: 80px" value="${d.volume}" min="1" step="1">
+                        <input type="number" class="form-control form-control-sm inputVolume" style="width: 80px" value="${d.volume}" min="1" step="1" aria-label="Volume in ml">
                         <span class="small text-muted">ml</span>
-                        <input type="time" class="form-control form-control-sm inputOrario" style="width: 100px" value="${d.orario}">
+                        <input type="time" class="form-control form-control-sm inputOrario" style="width: 100px" value="${d.orario}" aria-label="Orario">
                         <button type="button" class="btn btn-sm btn-outline-danger">x</button>
                     </div>
                 </div>`;
@@ -203,7 +205,7 @@
         }
 
         box.innerHTML = `
-            <h4 class="alert-heading mb-2">Tasso alcolemico stimato</h4>
+            <h3 class="alert-heading mb-2">Tasso alcolemico stimato</h3>
             <p class="display-6 mb-2">${bac.toFixed(2)} g/L</p>
             ${statoHtml}
             <hr>

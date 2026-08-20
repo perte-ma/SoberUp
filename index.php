@@ -25,6 +25,7 @@ $templateParams["intestazione"] = "Dashboard";
 $templateParams["nome"] = "template/home.php";
 $templateParams["idserata"] = $serataAperta ? $serataAperta['idserata'] : null;
 $templateParams["bac"] = $bac;
+$templateParams["articolo"] = $dbh->getArticoloByTitolo("Come funziona il calcolo del tasso alcolemico");
 
 require 'template/base.php';
 ?>

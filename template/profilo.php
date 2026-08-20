@@ -19,7 +19,7 @@
     </div>
 </div>
 <hr class="mb-4">
-<form action="" method="POST" class="card shadow-sm p-4">
+<form method="POST" class="card shadow-sm p-4">
     <div class="mb-3">
         <label for="nome" class="form-label">Nome</label>
         <input id="nome" name="nome" type="text" class="form-control" required value="<?php echo $templateParams["utente"]["nome"];?>">

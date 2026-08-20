@@ -23,7 +23,7 @@
         <p class="display-6 mt-3 mb-1"><?php echo number_format($bac, 2); ?> g/L</p>
 
         <?php if ($bac <= LIMITE_LEGALE_BAC): ?>
-            <p class="stato-puoi-guidare">
+            <p class="<?php echo $statoSemaforo == "giallo" ? "stato-attenzione" : "stato-puoi-guidare"; ?>">
                 <i class="bi bi-circle-fill"></i> <strong>Puoi guidare</strong>
                 <?php if ($statoSemaforo == "giallo"): ?>
                     <br><span class="small">ma sei vicino al limite, presta attenzione</span>
@@ -39,8 +39,10 @@
         <a href="catalogo-drink.php" class="btn btn-primary">Inizia una serata</a>
     <?php endif; ?>
 
-    <div class="disclaimer mx-auto mt-4" style="max-width: 640px;">
-        Il valore calcolato è una stima statistica basata su formule scientifiche approssimate
-        (formula di Widmark). Non sostituisce un etilometro. In caso di dubbio, non guidare.
-    </div>
+    <?php if ($templateParams["articolo"]): ?>
+        <div class="box-articolo mx-auto mt-4" style="max-width: 640px;">
+            <strong><?php echo $templateParams["articolo"]["titoloarticolo"]; ?></strong>
+            <p class="mb-0"><?php echo $templateParams["articolo"]["testoarticolo"]; ?></p>
+        </div>
+    <?php endif; ?>
 </div>

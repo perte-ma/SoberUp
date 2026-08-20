@@ -17,7 +17,7 @@
             <a class="nav-link text-light d-none d-md-inline-flex align-items-center gap-1 <?php isActive('profilo.php'); ?>" href="profilo.php"><i class="bi bi-person-circle"></i> Profilo</a>
             <?php endif; ?>
             <div class="form-check form-switch text-light mb-0">
-                <input class="form-check-input" type="checkbox" id="darkModeSwitch">
+                <input class="form-check-input" type="checkbox" id="darkModeSwitch" aria-label="Attiva/disattiva tema scuro">
                 <label class="form-check-label" for="darkModeSwitch"><i class="bi bi-moon-stars-fill" id="temaIcona"></i></label>
             </div>
         </div>

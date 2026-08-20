@@ -1,6 +1,10 @@
 <?php require 'template/messaggio.php'; ?>
 <?php require 'template/errori.php'; ?>
 
+<div class="text-end mb-3">
+    <a href="storicoSerate.php" class="btn btn-sm btn-outline-secondary"><i class="bi bi-clock-history"></i> Storico Serate</a>
+</div>
+
 <?php if (!$templateParams["haSerataAperta"]): ?>
 
     <div class="text-center">
@@ -36,7 +40,7 @@
                     <div class="text-center mt-3">
                         <p class="display-6 mb-1"><?php echo number_format($bac, 2); ?> g/L</p>
                         <?php if ($puoGuidare): ?>
-                            <p class="mb-1 stato-puoi-guidare">
+                            <p class="mb-1 <?php echo $statoSemaforo == "giallo" ? "stato-attenzione" : "stato-puoi-guidare"; ?>">
                                 <i class="bi bi-circle-fill"></i> <strong>Puoi guidare</strong>
                                 <?php if ($statoSemaforo == "giallo"): ?>
                                     <br><span class="small">ma sei vicino al limite, presta attenzione</span>
@@ -77,11 +81,11 @@
                                     </div>
 
                                     <div class="d-flex align-items-center gap-2">
-                                        <input type="number" class="form-control form-control-sm" style="width: 85px" name="volume" value="<?php echo $d["volume"]; ?>" min="1" step="1" required>
+                                        <input type="number" class="form-control form-control-sm" style="width: 85px" name="volume" value="<?php echo $d["volume"]; ?>" min="1" step="1" aria-label="Volume in ml" required>
                                         <span class="small text-muted">ml</span>
-                                        <input type="time" class="form-control form-control-sm" style="width: 105px" name="orario" value="<?php echo (new DateTime($d["orario"]))->format('H:i'); ?>" required>
-                                        <button type="submit" name="modifica" value="1" class="btn btn-sm btn-outline-primary" title="Salva modifiche">💾</button>
-                                        <button type="submit" name="elimina" value="1" class="btn btn-sm btn-outline-danger" title="Elimina" onclick="return confirm('Eliminare questo drink dalla serata?');">🗑</button>
+                                        <input type="time" class="form-control form-control-sm" style="width: 105px" name="orario" value="<?php echo (new DateTime($d["orario"]))->format('H:i'); ?>" aria-label="Orario" required>
+                                        <button type="submit" name="modifica" value="1" class="btn btn-sm btn-outline-primary" title="Salva modifiche"><i class="bi bi-check-lg"></i></button>
+                                        <button type="submit" name="elimina" value="1" class="btn btn-sm btn-outline-danger" title="Elimina" onclick="return confirm('Eliminare questo drink dalla serata?');"><i class="bi bi-trash"></i></button>
                                     </div>
                                 </form>
                             </li>
@@ -89,10 +93,12 @@
                     </ul>
                 <?php endif; ?>
             </div>
-            <div class="disclaimer mx-auto" style="max-width: 640px;">
-                Il valore calcolato è una stima statistica basata sulla formula di Watson. Non sostituisce un
-                etilometro. In caso di dubbio, non guidare.
-            </div>
+            <?php if ($templateParams["articolo"]): ?>
+                <div class="box-articolo mx-auto" style="max-width: 640px;">
+                    <strong><?php echo $templateParams["articolo"]["titoloarticolo"]; ?></strong>
+                    <p class="mb-0"><?php echo $templateParams["articolo"]["testoarticolo"]; ?></p>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
     <script>

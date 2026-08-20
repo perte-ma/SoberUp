@@ -4,7 +4,7 @@
 <div class="row justify-content-center">
     <div class="col-12 col-md-8 col-lg-6">
 
-        <form action="" method="POST" class="card shadow-sm p-4 mb-4">
+        <form method="POST" class="card shadow-sm p-4 mb-4">
             <div class="mb-3">
                 <label for="username" class="form-label">Username o email</label>
                 <input id="username" name="username" type="text" class="form-control" required>

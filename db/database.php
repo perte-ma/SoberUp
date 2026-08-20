@@ -227,6 +227,16 @@ class DatabaseHelper{
         return $result->fetch_assoc();
     }
 
+    public function getArticoloByTitolo($titoloarticolo){
+        $query = "SELECT a.*, u.nome, u.cognome FROM articolo a, utente u WHERE a.admin = u.idutente AND a.titoloarticolo = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $titoloarticolo);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_assoc();
+    }
+
     public function insertArticolo($titoloarticolo, $testoarticolo, $dataarticolo, $admin){
         $query = "INSERT INTO articolo (titoloarticolo, testoarticolo, dataarticolo, admin) VALUES (?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
@@ -356,6 +366,35 @@ class DatabaseHelper{
         $result = $stmt->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // Il drink più bevuto dall'utente in tutte le sue serate (per le statistiche dello storico)
+    public function getDrinkPreferitoUtente($idutente){
+        $query = "SELECT d.nomedrink, COUNT(*) AS conteggio
+                FROM serata_ha_drink sd, serata s, drink d
+                WHERE sd.serata = s.idserata AND sd.drink = d.iddrink AND s.utente = ?
+                GROUP BY d.iddrink
+                ORDER BY conteggio DESC
+                LIMIT 1";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $idutente);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_assoc();
+    }
+
+    // Millilitri totali bevuti dall'utente in tutte le sue serate
+    public function getMillilitriTotaliUtente($idutente){
+        $query = "SELECT SUM(sd.volume) AS millilitri
+                FROM serata_ha_drink sd, serata s
+                WHERE sd.serata = s.idserata AND s.utente = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $idutente);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_assoc()['millilitri'];
     }
 
     // AMICIZIA

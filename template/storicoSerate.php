@@ -1,5 +1,32 @@
 <?php $serate = $templateParams["serate"]; ?>
 
+<?php if (!empty($serate)): ?>
+    <?php $drinkPreferito = $templateParams["drinkPreferito"]; ?>
+    <div class="row row-cols-1 row-cols-md-3 g-3 mb-4">
+        <div class="col">
+            <div class="card shadow-sm p-3 text-center h-100">
+                <i class="bi bi-cup-straw fs-3"></i>
+                <p class="h5 mb-0"><?php echo $drinkPreferito ? $drinkPreferito["nomedrink"] : "-"; ?></p>
+                <p class="text-muted small mb-0">Drink preferito</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card shadow-sm p-3 text-center h-100">
+                <i class="bi bi-droplet-half fs-3"></i>
+                <p class="h5 mb-0"><?php echo number_format($templateParams["millilitriTotali"] / 1000, 2); ?> L</p>
+                <p class="text-muted small mb-0">Bevuti in totale</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card shadow-sm p-3 text-center h-100">
+                <i class="bi bi-graph-up-arrow fs-3"></i>
+                <p class="h5 mb-0"><?php echo number_format($templateParams["bacMassimo"], 2); ?> g/L</p>
+                <p class="text-muted small mb-0">BAC più alto raggiunto</p>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
 <?php if (empty($serate)): ?>
 
     <div class="text-center">
@@ -23,14 +50,14 @@
                         data-bs-toggle="collapse" data-bs-target="#<?php echo $collapseId; ?>"
                         aria-expanded="<?php echo $i == 0 ? 'true' : 'false'; ?>"
                         aria-controls="<?php echo $collapseId; ?>">
-                        <div class="d-flex justify-content-between w-100 me-3 flex-wrap">
+                        <span class="d-flex justify-content-between w-100 me-3 flex-wrap">
                             <span><?php echo $inizio->format('d/m/Y H:i'); ?></span>
                             <span class="text-muted small">
                                 Durata <?php echo $durata->format('%hh %imin'); ?>
                                 -
                                 <?php echo $numDrink; ?> drink
                             </span>
-                        </div>
+                        </span>
                     </button>
                 </h2>
                 <div id="<?php echo $collapseId; ?>"

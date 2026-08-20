@@ -16,6 +16,6 @@
 
 <h2 class="h5">Aggiungi categoria</h2>
 <form method="POST" action="admin-categorie.php" class="d-flex gap-2">
-    <input type="text" name="nomecategoria" class="form-control" placeholder="Nome nuova categoria" required>
+    <input type="text" name="nomecategoria" class="form-control" placeholder="Nome nuova categoria" aria-label="Nome nuova categoria" required>
     <button type="submit" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Aggiungi</button>
 </form>

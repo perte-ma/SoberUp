@@ -9,10 +9,10 @@
                 <span class="text-muted small">(<?php echo $d["nomecategoria"]; ?>, <?php echo $d["gradazione"]; ?>%, <?php echo $d["volume_standard"]; ?> ml)</span>
             </div>
             <div class="d-flex align-items-center gap-2">
-                <a href="admin-drink.php?modifica=<?php echo $d["iddrink"]; ?>" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a>
+                <a href="admin-drink.php?modifica=<?php echo $d["iddrink"]; ?>" class="btn btn-sm btn-outline-primary" title="Modifica"><i class="bi bi-pencil"></i></a>
                 <form method="POST" action="admin-drink.php" onsubmit="return confirm('Eliminare questo drink?');">
                     <input type="hidden" name="iddrink" value="<?php echo $d["iddrink"]; ?>">
-                    <button type="submit" name="elimina" value="1" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                    <button type="submit" name="elimina" value="1" class="btn btn-sm btn-outline-danger" title="Elimina"><i class="bi bi-trash"></i></button>
                 </form>
             </div>
         </li>
@@ -35,6 +35,7 @@
     <div class="mb-3">
         <label for="categoria" class="form-label">Categoria</label>
         <select id="categoria" name="categoria" class="form-select" required>
+            <option value="" disabled <?php echo !$drink ? "selected" : ""; ?>>Seleziona una categoria</option>
             <?php foreach ($templateParams["categorie"] as $c): ?>
                 <option value="<?php echo $c["idcategoria"]; ?>" <?php echo ($drink && $drink["categoria"] == $c["idcategoria"]) ? "selected" : ""; ?>><?php echo $c["nomecategoria"]; ?></option>
             <?php endforeach; ?>
